@@ -1,0 +1,154 @@
+// vertical align el inside parent with fixed height/min-height
+// usage 
+// html - .parent>.child
+// scss - @include v-align;
+//     or @include v-align(250px);
+//     or @include v-align(250px, bottom, before);
+//
+@mixin v-align($va-height: 100%, $va-direction: middle, $va-pseudo: after) {
+  white-space: nowrap;
+  text-align: center;
+
+  &:#{$va-pseudo} {
+    content: '';
+    display: inline-block;
+    vertical-align: $va-direction;
+    width: 0;
+    min-height: $va-height;
+  }
+
+  > * {
+    white-space: normal;
+    display: inline-block;
+    vertical-align: $va-direction;
+    max-width: 99%;
+  }
+}
+
+@mixin v-align-pair($child-name1, $child-name2, $valign: middle, $width1: auto, $width2: auto ) {
+  display: table;
+  .#{$child-name1}{
+    display: table-cell;
+    vertical-align: $valign;
+    width: $width1; 
+  }
+ .#{$child-name2} {
+    display: table-cell;
+    vertical-align: $valign;
+    width: $width2;
+  }
+}
+
+
+// vertical/horizontal align el
+// usage: @include vertical-align-el;
+//
+@mixin xycenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+}
+@mixin xcenter {
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translate(-50%,0);
+	-ms-transform: translate(-50%,0);
+	transform: translate(-50%,0);
+}
+@mixin ycenter {
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translate(0,-50%);
+	-ms-transform: translate(0,-50%);
+	transform: translate(0,-50%);
+}
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+/// font-smothing
+/// @include font-smoothing(on);
+/// @include font-smoothing(off);
+@mixin font-smoothing($value:on){
+  @if $value == on{
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  @else{
+    -webkit-font-smoothing:subpixel-antialiased;
+    -moz-osx-font-smoothing:auto;
+  }
+}
+
+@mixin hide-text {
+  overflow: hidden;
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+/// Animate css properties
+// usage 
+// scss - @include animate(color);
+//     or @include animate(color width);
+//     or @include animate(color width, 1s, linear);
+//
+$animation-speed: .3s !default;
+
+@mixin animate($properties, $duration: $animation-speed, $easing: ease-in-out) {
+  $list:();
+  @each $prop in $properties {
+    $str: #{$prop} #{$animation-speed} #{$easing};
+    $list: join($list, $str, comma);
+  }
+  transition: $list;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &::-moz-placeholder {opacity: 1; @content}
+  &:-moz-placeholder {@content}
+  &:-ms-input-placeholder {@content}
+  &.placeholder {@content}
+}
+@mixin anim($param: all, $dur: .2s, $type: ease-in-out, $delay: 0s) {
+	transition: $param $dur $type $delay;
+}
+@mixin anim-param($params...) {
+	transition-property: $params;
+}
+
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+	$src: null;
+
+	$extmods: (
+			eot: "?",
+			svg: "#" + str-replace($name, " ", "_")
+	);
+
+	$formats: (
+			otf: "opentype",
+			ttf: "truetype"
+	);
+
+	@each $ext in $exts {
+		$extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+		$src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+	}
+
+	@font-face {
+		font-family: quote($name);
+		font-style: $style;
+		font-weight: $weight;
+		src: $src;
+	}
+}

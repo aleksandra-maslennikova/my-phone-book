@@ -1,0 +1,373 @@
+/**
+ * Description: main styles
+ * Version: 1.0.0
+ * Last update: 06.02.2017
+ * Author: alex.maslennikova19@gmail.com
+ */
+/*$breakpoints: (
+	'screen-xs': 480px,
+	'screen-sm': 768px,
+	'screen-md': 992px,
+	'screen-lg': 1200px
+);
+// keywords
+$media-expressions: (
+	'screen': 'screen',
+	'print': 'print',
+	'handheld': 'handheld',
+	'landscape': '(orientation: landscape)',
+	'portrait': '(orientation: portrait)',
+	'retina2x': '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)',
+	'retina3x': '(-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 240dpi)'
+);*/
+.clearfix:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  /* 1 */
+  text-overflow: ellipsis;
+  /* 2 */
+  overflow: hidden;
+}
+
+a:hover, a:focus, a:active, a.active {
+  color: #777;
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+}
+
+h2 {
+  margin: 20px 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+.edit-contact .container, .add-user .container, .app .container {
+  padding-bottom: 50px;
+}
+
+.keypad .container {
+  padding-bottom: 20px;
+}
+
+.container {
+  max-width: 400px;
+  min-width: 400px;
+  background: #ccc;
+  padding: 0 25px;
+}
+
+.top-radius {
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding-top: 25px;
+}
+
+.bottom-radius {
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding-bottom: 25px;
+}
+
+.header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.keypad-holder {
+  width: 250px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.number {
+  margin: 0 auto;
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.number .numbers {
+  align-self: flex-end;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+.number .glyphicon:hover {
+  color: #333;
+  cursor: pointer;
+}
+
+.key {
+  width: 60px;
+  min-height: 60px;
+  padding: 15px 0;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key:last-child {
+  background: #4cda64;
+  color: #fff;
+}
+
+.key:last-child:hover {
+  background: #348f3c;
+  border: 1px solid #fff;
+}
+
+.key:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #777;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tab:hover, .tab:focus, .tab:active, .tab.active {
+  color: #777;
+  text-decoration: none;
+}
+
+.tab-text {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.contacts tbody {
+  display: block;
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.contacts tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table > thead > tr > th {
+  border: none;
+}
+
+.table > thead > tr > th:hover {
+  cursor: pointer;
+}
+
+.form-inline .form-control {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-inline .form-group {
+  display: block;
+}
+
+.user-top-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.user-img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.user-name {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.options-line {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.options-icon {
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 5px;
+  position: relative;
+}
+
+.options-icon:hover {
+  background: #777;
+}
+
+.options-text {
+  font-size: 12px;
+}
+
+.message, .call, .video, .mail {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.user-data {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.options-table {
+  margin-bottom: 20px;
+  font-size: 16px;
+  max-height: 250px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.options-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #777;
+}
+
+.options-item:first-child {
+  border-top: 1px solid #777;
+}
+
+.scroll-holder {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.add-foto-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  outline: none;
+}
+
+.done-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.done-btn:hover {
+  color: #777;
+}
+
+.main-info-holder {
+  flex-grow: 1;
+}
+
+.edit-main-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.edit-foto {
+  margin-right: 10px;
+}
+
+.edit-field {
+  padding: 5px 0;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  display: flex;
+}
+
+.edit-field .glyphicon {
+  top: 4px;
+}
+
+.edit-field .glyphicon-minus-sign {
+  color: #e32910;
+}
+
+.edit-field .glyphicon-minus-sign:hover, .edit-field .glyphicon-minus-sign:focus, .edit-field .glyphicon-minus-sign:active {
+  color: #a70b0f;
+}
+
+.edit-field .glyphicon-plus-sign {
+  color: #4cda64;
+}
+
+.edit-field .glyphicon-plus-sign:hover, .edit-field .glyphicon-plus-sign:focus, .edit-field .glyphicon-plus-sign:active {
+  color: #348f3c;
+}
+
+.delete-btn {
+  padding: 0 5px;
+  margin-top: 3px;
+  margin-right: 10px;
+  border: none;
+  background: transparent;
+}
+
+::-webkit-input-placeholder {
+  color: #555;
+}
+
+:-moz-placeholder {
+  color: #555;
+}
+
+.add-btn {
+  border: 0;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  outline-color: transparent;
+  padding: 0 5px;
+}
+
+.delete-contact {
+  color: #e32910;
+  margin: 0 auto;
+  font-weight: bold;
+}
