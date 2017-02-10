@@ -83,9 +83,10 @@ class App {
   }
 
   findUsersByName(param) {
+   
     let finedUsers = [];
     this.users.forEach(elem => {
-      if (elem.name.search([param]) != -1) {
+      if (elem.name.search([param]) != -1|| elem.name.toLowerCase().search([param])!= -1) {
         finedUsers.push(elem);
       }
     })
