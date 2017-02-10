@@ -84,14 +84,15 @@ class EditContact {
 	</main>`
   }
   render() {
-    let app = document.createElement('div');
-    document.body.prepend(app);
-    app.id = 'app';
-    app.innerHTML += this.createHeader() + this.createMain();
+		let app = document.getElementById('app')
+    //let app = document.createElement('div');
+    //document.body.prepend(app);
+    //app.id = 'app';
+    app.innerHTML = this.createHeader() + this.createMain();
   }
 }
 
 
 
 let myEditContact = new EditContact();
-myEditContact.render();
+

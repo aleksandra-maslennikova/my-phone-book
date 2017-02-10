@@ -33,39 +33,66 @@ class Keypad {
 		</div>
 	</main>`
   }
+  transformPhoneNumber(element, char) {
+    if (element.textContent.length < 15) {
+      if (!element.textContent) {
+        element.textContent += '(' + char;
+      } else if (element.textContent.length == 4) {
+        element.textContent += ')-' + char;
+      } else if (element.textContent.length == 8 || element.textContent.length == 11) {
+        element.textContent += '-' + char;
+      }
+      else {
+        element.textContent += char;
+      }
+    }
+  }
+
+  deleteNumbers(element) {
+    let length;
+    length = element.textContent.length - 1;
+    if (length >= 0) {
+      element.textContent = element.textContent.slice(0, length);
+    }
+  }
+
   render() {
-    let app = document.createElement('div');
-    document.body.prepend(app);
-    app.id = 'app';
-    app.innerHTML += this.createHeader() + this.createMain();
+    let app = document.getElementById('app');
+    //document.body.prepend(app);
+    //app.id = 'app';
+    app.innerHTML = this.createHeader() + this.createMain();
   }
 }
 
 
-
 let myKeypad = new Keypad();
-myKeypad.render();
+/*
+  
+      let body = document.querySelector('body');
+      let keypad = document.querySelector('.keypad-holder');
+      let numbers = document.querySelector('.numbers');
+      let deleteNumber = document.getElementById('deleteNumber');
 
 
-
-let keypad = document.querySelector('.keypad-holder');
-let numbers = document.querySelector('.numbers');
-
-keypad.addEventListener('click', e => {
-  if (e.target.classList.contains('key')) {
-    numbers.textContent += e.target.textContent;
-  }
-});
+      keypad.addEventListener('click', e => {
+        if (e.target.classList.contains('key')) {
+          myKeypad.transformPhoneNumber(numbers, e.target.textContent);
+        }
+      });
 
 
+      deleteNumber.addEventListener('click', e => {
+        myKeypad.deleteNumbers(numbers);
+      });
 
-let deleteNumber = document.getElementById('deleteNumber');
 
-deleteNumber.addEventListener('click', e => {
-  let length;
-  length = numbers.textContent.length - 1;
-  if (length >= 0) {
-    numbers.textContent = numbers.textContent.slice(0, length);
-  }
-});
+      document.body.addEventListener('keydown', (e) => {
+        if (Number(e.key) >= 0 || e.key == '*' || e.key == '#') {
+          myKeypad.transformPhoneNumber(numbers, e.key);
+        }
+        if (e.key == 'Backspace') {
+          myKeypad.deleteNumbers(numbers)
+        }
+      })*/
+
 

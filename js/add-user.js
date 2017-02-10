@@ -87,14 +87,12 @@ class AddUser {
 	</main>`
   }
   render() {
-    let app = document.createElement('div');
-    document.body.prepend(app);
-    app.id = 'app';
-    app.innerHTML += this.createHeader() + this.createMain();
+    let app = document.getElementById('app')
+    app.innerHTML = this.createHeader() + this.createMain();
   }
 }
 
 
 
 let myAddUser = new AddUser();
-myAddUser.render();
+

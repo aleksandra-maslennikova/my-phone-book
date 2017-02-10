@@ -55,6 +55,10 @@ h3 {
   padding-bottom: 50px;
 }
 
+.app .container {
+  min-height: 400px;
+}
+
 .keypad .container {
   padding-bottom: 20px;
 }
