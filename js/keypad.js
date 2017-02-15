@@ -55,44 +55,41 @@ class Keypad {
       element.textContent = element.textContent.slice(0, length);
     }
   }
-
-  render() {
-    let app = document.getElementById('app');
-    //document.body.prepend(app);
-    //app.id = 'app';
-    app.innerHTML = this.createHeader() + this.createMain();
-  }
-}
+  events(){
+     this.body = document.querySelector('body');
+     this.keypad = document.querySelector('.keypad-holder');
+     this.numbers = document.querySelector('.numbers');
+     this.deleteNumber = document.getElementById('deleteNumber');
 
 
-let myKeypad = new Keypad();
-/*
-  
-      let body = document.querySelector('body');
-      let keypad = document.querySelector('.keypad-holder');
-      let numbers = document.querySelector('.numbers');
-      let deleteNumber = document.getElementById('deleteNumber');
-
-
-      keypad.addEventListener('click', e => {
+      this.keypad.addEventListener('click', e => {
         if (e.target.classList.contains('key')) {
-          myKeypad.transformPhoneNumber(numbers, e.target.textContent);
+          this.transformPhoneNumber(this.numbers, e.target.textContent);
         }
       });
 
 
-      deleteNumber.addEventListener('click', e => {
-        myKeypad.deleteNumbers(numbers);
+      this.deleteNumber.addEventListener('click', e => {
+       this.deleteNumbers(this.numbers);
       });
 
 
       document.body.addEventListener('keydown', (e) => {
         if (Number(e.key) >= 0 || e.key == '*' || e.key == '#') {
-          myKeypad.transformPhoneNumber(numbers, e.key);
+          this.transformPhoneNumber(this.numbers, e.key);
         }
         if (e.key == 'Backspace') {
-          myKeypad.deleteNumbers(numbers)
+         this.deleteNumbers(this.numbers)
         }
-      })*/
+      })
+  }
+  render() {
+    let app = document.getElementById('app');
+    app.innerHTML = this.createHeader() + this.createMain();
+  }
+}
+
+
+
 
 

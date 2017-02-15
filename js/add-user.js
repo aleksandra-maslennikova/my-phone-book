@@ -92,7 +92,5 @@ class AddUser {
   }
 }
 
-
-
 let myAddUser = new AddUser();
 
