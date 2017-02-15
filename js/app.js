@@ -5,7 +5,8 @@ app.id = 'app';
 class App {
   constructor() {
     this.tableHeaders = ['Name', 'Last Name', 'Email'];
-    this.users = [
+
+    /*[
       { name: 'Иван', lastname: 'Петров', email: 'IvanPetrov@ec.ua' },
       { name: 'Сергей', lastname: 'Сергеев', email: 'SergeiSergeev@ec.ua' },
       { name: 'Иван', lastname: 'Иванов', email: 'IvanIvanov@ec.ua' },
@@ -22,7 +23,7 @@ class App {
       { name: 'Влад', lastname: 'Яма', email: 'VladYama@ec.ua' },
       { name: 'Кира', lastname: 'Воробьева', email: 'Kira1990@ec.ua' },
       { name: 'Виктор', lastname: 'Кривенко', email: 'ViktorKriv@ec.ua' },
-    ];
+    ];*/
 
   }
 
@@ -35,18 +36,18 @@ class App {
     let users;
     if (param) {
       users = param;
-    } else {
-      users = this.users;
-    }
-    let tbody = ''
-    users.forEach(el => {
-      let user = el;
-      tbody += `<tr>`;
-      for (let key in user) {
-        tbody += `<td>${user[key]}</td>`;
-      }
-      tbody += `</tr>`;
+    } else { users = this.users }
+    users.forEach(elem => {
+      let arr = elem.fullName.split(' ');
+      elem.name = arr[0];
+      elem.lastname = arr[1];
     })
+    console.log(users);
+    let tbody = '<tbody>'
+    users.forEach(el => {
+      tbody += `<tr><td>${el.name}</td><td>${el.lastname}</td><td>${el.email}</td></tr>`;
+    })
+    tbody += `</tbody>`;
     return tbody;
   }
 
@@ -58,7 +59,7 @@ class App {
     });
     table += `</thead>`;
     table += this.createTableBody();
-    table += `</tbody></table>`;
+    table += `</table>`;
     return table;
   }
 
@@ -101,28 +102,41 @@ class App {
     this.nameHeader = document.querySelector('.header0');
     this.lastNameHeader = document.querySelector('.header1');
     this.emailHeader = document.querySelector('.header2');
-    this.table = document.querySelector('tbody');
+    this.tbody = document.querySelector('tbody');
     this.search = document.getElementById('search');
     this.nameHeader.addEventListener('click', e => {
       this.users = this.sortUsers('name');
-      this.table.innerHTML = this.createTableBody();
+      this.tbody.innerHTML = this.createTableBody();
 
     });
 
     this.lastNameHeader.addEventListener('click', e => {
       this.users = this.sortUsers('lastname');
-      this.table.innerHTML = this.createTableBody();
+      this.tbody.innerHTML = this.createTableBody();
     });
 
     this.emailHeader.addEventListener('click', e => {
       this.users = this.sortUsers('email');
-      this.table.innerHTML = this.createTableBody();
+      this.tbody.innerHTML = this.createTableBody();
     });
 
     this.search.addEventListener('keyup', e => {
       this.newUsers = this.findUsersByName(this.search.value);
-      this.table.innerHTML = this.createTableBody(this.newUsers);
+      this.tbody.innerHTML = this.createTableBody(this.newUsers);
     })
+  }
+  request() {
+    const url = 'https://easycode-js.herokuapp.com/alexm/users';
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.send();
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        this.users = JSON.parse(xhr.responseText);
+        this.render();
+        this.events();
+      }
+    }
   }
 
   render() {
@@ -133,11 +147,7 @@ class App {
 }
 
 let myTelephoneBook = new App();
-myTelephoneBook.render();
-myTelephoneBook.events();
-
-
-
+myTelephoneBook.request();
 
 
 
@@ -155,7 +165,7 @@ links.forEach(link => {
     }
     //--------------KEYPAD-----------------------------//
     if (link.getAttribute('href') == 'keypad.html') {
-    let myKeypad = new Keypad();
+      let myKeypad = new Keypad();
       myKeypad.render();
       myKeypad.events();
     }
