@@ -5,26 +5,6 @@ app.id = 'app';
 class App {
   constructor() {
     this.tableHeaders = ['Name', 'Last Name', 'Email'];
-
-    /*[
-      { name: 'Иван', lastname: 'Петров', email: 'IvanPetrov@ec.ua' },
-      { name: 'Сергей', lastname: 'Сергеев', email: 'SergeiSergeev@ec.ua' },
-      { name: 'Иван', lastname: 'Иванов', email: 'IvanIvanov@ec.ua' },
-      { name: 'Александр', lastname: 'Александров', email: 'AlexAlex@ec.ua' },
-      { name: 'Алекс', lastname: 'Смирнов', email: 'AlexSmirnov@ec.ua' },
-      { name: 'Сергей', lastname: 'Волков', email: 'VolkovSergey@ec.ua' },
-      { name: 'Мария', lastname: 'Шарапова', email: 'MariyaSharapova@ec.ua' },
-      { name: 'Александр', lastname: 'Винник', email: 'AlexVinnik@ec.ua' },
-      { name: 'Дарий', lastname: 'Смирнов', email: 'DariySmirnov@ec.ua' },
-      { name: 'Елена', lastname: 'Лещенко', email: 'ElenaLeshenko@ec.ua' },
-      { name: 'Ольга', lastname: 'Новикова', email: 'OlgaNovikova@ec.ua' },
-      { name: 'Наталья', lastname: 'Шемякина', email: 'ShemyakinaN@ec.ua' },
-      { name: 'Анна', lastname: 'Донцова', email: 'AnnaDontsova@ec.ua' },
-      { name: 'Влад', lastname: 'Яма', email: 'VladYama@ec.ua' },
-      { name: 'Кира', lastname: 'Воробьева', email: 'Kira1990@ec.ua' },
-      { name: 'Виктор', lastname: 'Кривенко', email: 'ViktorKriv@ec.ua' },
-    ];*/
-
   }
 
   createHeader() {
