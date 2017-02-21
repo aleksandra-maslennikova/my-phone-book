@@ -1,98 +1,137 @@
 class EditContact {
-  constructor() {
-
-  }
-  createHeader() {
-    return `<header class="header">
+	constructor(user) {
+		this.user = user;
+		this.newUser = {};
+		this.mainData = ['name', 'lastname', 'company'];
+		this.additionalData = ['phone', 'email', 'address', 'birthday', 'sotialProfile'];
+	}
+	createHeader() {
+		return `<header class="header">
 		<div class="container top-radius">
 			<nav class="user-top-line">
-				<a href="user.html">Cansel</a>
-				<button class="done-btn">Done</button>
+				<a href="user.html" id ="cancel">Cancel</a>
+				<a href = "index.html" class="done-btn" id ="done">Done</button>
 			</nav>
 		</div>
 	</header>`;
-  }
+	}
+	createMainData() {
+		let string = '';
+		this.mainData.forEach(elem => {
+			if (this.user[elem]) {
+				string += `<div class="edit-field">
+						<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+						<label class="sr-only" for="${elem}">${this.user[elem]}</label>
+						<input type="text" class="delete-btn" id="${elem}" value ="${this.user[elem]}" disabled>
+					</div>`;
+			} else {
+				string += `<div class="edit-field">
+						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						<label class="sr-only" for="${elem}">${elem}</label>
+						<input type="text" class="add-btn" id="${elem}" placeholder="${elem}">
+					</div>`;
+			}
 
-
-  createMain() {
-
-    return `<main class="main edit-contact"">
+		})
+		string += `</div></div>`;
+		return string
+	}
+	createAdditionalData() {
+		let string = '';
+		string += `<div class="scroll-holder">
+				<div class="edit-info">`;
+		this.additionalData.forEach(elem => {
+			if (this.user[elem]) {
+				string += `<div class="edit-field">
+						<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+						<label class="sr-only" for="${elem}">${this.user[elem]}</label>
+						<input type="text" class="delete-btn" id="${elem}" value ="${this.user[elem]}" disabled>
+					</div>`;
+			} else {
+				string += `<div class="edit-field">
+						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						<label class="sr-only" for="${elem}">${elem}</label>
+						<input type="text" class="add-btn" id="${elem}" placeholder="${elem}">
+					</div>`;
+			}
+		})
+		string += `</div>`
+		return string
+	}
+	createMain() {
+		let main = '';
+		main += `<main class="main edit-contact" id = "main">
 		<div class="container">
 			<div class="edit-main-info">
 				<div class="edit-foto"><img src="images/user-face-mini.png" alt="#" class=" user-img img-circle center-block"></div>
-				<div class="main-info-holder">
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="firstname">First name</label>
-						<input type="text" class="add-btn" id="firstname" placeholder="First Name">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="lastname">Last name</label>
-						<input type="text" class="add-btn" id="lastname" placeholder="Last Name">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="company">Last name</label>
-						<input type="text" class="add-btn" id="company" placeholder="Company">
-					</div>
-				</div>
-			</div>
-			<div class="scroll-holder">
-				<div class="edit-info">
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="deletePhone">Add home phone</label>
-						<input type="text" class="delete-btn" id ="deletePhone" value="+38 (063) 733 44 55" disabled>
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addHomePhone">Add home phone</label>
-						<input type="text" class="add-btn" id="addHomePhone" placeholder="add home phone">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="email">Add email</label>
-						<input type="text" class="add-btn" id="email" placeholder="add email">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addAddress">Add address</label>
-						<input type="text" class="add-btn" id="addAddress" placeholder="add address">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="birthday">Add birthday</label>
-						<input type="text" class="add-btn" id="birthday" placeholder="add birthday">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addSocialProfile">Add social profile</label>
-						<input type="text" class="add-btn" id="addSocialProfile" placeholder="add social profile">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addField">Add field</label>
-						<input type="text" class="add-btn" id="addField" placeholder="add field">
-					</div>
-					<div class="edit-field">
+				<div class="main-info-holder">`;
+		main += this.createMainData();
+		main += this.createAdditionalData();
+		main +=
+			`<div class="edit-field">
 						<button href="#" class="delete-contact">delete contact</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</main>`
-  }
-  render() {
+	</main>`;
+		return main
+	}
+	events() {
+		this.cancel = document.getElementById('cancel');
+		this.done = document.getElementById('done');
+		this.main = document.getElementById('main');
+		this.main.addEventListener('click', e => {
+			e.preventDefault();
+			if (e.target.classList.contains('glyphicon-minus-sign')) {
+				this.selectedInput = e.target.parentElement.getElementsByTagName('input');
+				this.input = this.selectedInput[0];
+				this.input.removeAttribute('disabled');
+				this.input.value = '';
+				console.log(this.input);
+			}
+		})
+		this.cancel.addEventListener('click', e => {
+			e.preventDefault();
+			let myUser = new User(this.user);
+			myUser.render();
+		});
+
+		this.done.addEventListener('click', e => {
+			e.preventDefault();
+			const url = 'https://easycode-js.herokuapp.com/alexm/users';
+			let inputs = [...this.main.getElementsByTagName('input')];
+			inputs.forEach(elem => {
+				let prop = elem.id;
+				if (elem.value) {
+					this.newUser[prop] = elem.value;
+				}
+			})
+			if (this.newUser.name && this.newUser.lastname) {
+				this.newUser.fullName = `${this.newUser.name} ${this.newUser.lastname}`
+			delete this.newUser.name;
+				delete this.newUser.lastname;
+			}
+			fetch(`${url}/${this.user._id}`, {
+				method: "PATCH",
+				body: JSON.stringify(this.newUser),
+				headers: { "Content-Type": "application/json" },
+			})
+				.then(data => {
+					myTelephoneBook.request();
+				})
+		});
+
+	}
+
+	render() {
 		let app = document.getElementById('app')
-    //let app = document.createElement('div');
-    //document.body.prepend(app);
-    //app.id = 'app';
-    app.innerHTML = this.createHeader() + this.createMain();
-  }
+		app.innerHTML = this.createHeader() + this.createMain();
+		this.events()
+	}
 }
 
 
 
-let myEditContact = new EditContact();
+
 
