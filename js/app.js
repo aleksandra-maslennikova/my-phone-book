@@ -1,7 +1,3 @@
-let app = document.createElement('div');
-document.body.prepend(app);
-app.id = 'app';
-
 class App {
   constructor() {
     this.tableHeaders = ['Name', 'Last Name', 'Email'];
@@ -22,10 +18,9 @@ class App {
       elem.name = arr[0];
       elem.lastname = arr[1];
     })
-    console.log(users);
     let tbody = '<tbody>'
     users.forEach(el => {
-      tbody += `<tr><td>${el.name}</td><td>${el.lastname}</td><td>${el.email}</td></tr>`;
+      tbody += `<tr><td>${el.name}</td><td>${el.lastname}</td><td class = "email">${el.email}</td></tr>`;
     })
     tbody += `</tbody>`;
     return tbody;
@@ -33,11 +28,11 @@ class App {
 
 
   createTable() {
-    let table = `<table class = "table table-hover contacts"><thead>`;
+    let table = `<table class = "table table-hover contacts"><thead><tr>`;
     this.tableHeaders.forEach((el, index) => {
       table += `<th class = "header${index}">${el}</th>`;
     });
-    table += `</thead>`;
+    table += `</tr></thead>`;
     table += this.createTableBody();
     table += `</table>`;
     return table;
@@ -64,7 +59,18 @@ class App {
       return 0;
     })
   }
+  findUserByEmail(param) {
+    console.log(this.users);
+    let finedUser;
+    this.users.forEach(elem => {
+      if (elem.email === param) {
+        finedUser = elem;
+      }
+    })
+    return finedUser
 
+
+  }
 
   findUsersByName(param) {
 
@@ -84,46 +90,72 @@ class App {
     this.emailHeader = document.querySelector('.header2');
     this.tbody = document.querySelector('tbody');
     this.search = document.getElementById('search');
+
+    //----Sort users by name-------//
     this.nameHeader.addEventListener('click', e => {
       this.users = this.sortUsers('name');
       this.tbody.innerHTML = this.createTableBody();
 
     });
 
+    //----Sort users by lastname-------//
     this.lastNameHeader.addEventListener('click', e => {
       this.users = this.sortUsers('lastname');
       this.tbody.innerHTML = this.createTableBody();
     });
 
+    //----Sort users by email-------//
     this.emailHeader.addEventListener('click', e => {
       this.users = this.sortUsers('email');
       this.tbody.innerHTML = this.createTableBody();
     });
-
+    // ------Search user---------------//
     this.search.addEventListener('keyup', e => {
       this.newUsers = this.findUsersByName(this.search.value);
       this.tbody.innerHTML = this.createTableBody(this.newUsers);
     })
+
+    this.tbody.addEventListener('click', e => {
+
+      if (e.target.tagName == "TD") {
+        this.row = e.target.parentElement;
+      } else {
+        this.row = e.target
+      }
+      this.email = this.row.querySelector('.email').textContent;
+      this.user = this.findUserByEmail(this.email);
+      let myUser = new User(this.user);
+      myUser.render();
+    })
   }
+
+
   request() {
     const url = 'https://easycode-js.herokuapp.com/alexm/users';
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.send();
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        this.users = JSON.parse(xhr.responseText);
+    fetch(url)
+      .then(data => data.json())
+      .then(data => {
+        this.users = data;
         this.render();
-        this.events();
-      }
-    }
+      })
   }
 
   render() {
     let app = document.getElementById('app');
-    app.innerHTML = this.createHeader() + this.createMain();
-  }
+    if (app) {
+      app.innerHTML = this.createHeader() + this.createMain();
+      this.events();
+    } else {
+      app = document.createElement('div');
+      document.body.prepend(app);
+      app.id = 'app';
+      app.innerHTML = this.createHeader() + this.createMain();
+      this.events();
+    }
 
+
+
+  }
 }
 
 let myTelephoneBook = new App();
@@ -149,16 +181,6 @@ links.forEach(link => {
       myKeypad.render();
       myKeypad.events();
     }
-    //-----------------EDIT-CONTACT---------------//
-    if (link.getAttribute('href') == 'edit-contact.html') {
-      myEditContact.render()
-    }
-
-    //-----------------USER---------------------//
-    if (link.getAttribute('href') == 'user.html') {
-      myUser.render()
-    }
-
     // ---------------ADD-USER -----------------//
     if (link.getAttribute('href') == 'add-user.html') {
       myAddUser.render()
