@@ -1,27 +1,39 @@
 class User {
-  constructor() {
-
-  }
-  createHeader() {
-    return `<header class="header">
+	constructor(user) {
+		this.user = user;
+	}
+	createHeader() {
+		return `<header class="header">
 		<div class="container top-radius">
 			<div class="user-top-line">
-				<a href="index.html">
+				<a href ="index.html" id ="backToContacts">
 					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Contacts
 				</a>
-				<a href="edit-contact.html">Edit</a>
+				<a href ="edit-contact.html" id ="editContact">Edit</a>
 			</div>
 		</div>
 	</header>`;
-  }
+	}
 
+	fillData() {
+		let string = '';
+		for (let key in this.user) {
+			let data = this.user[key];
+			if (key !== '_id' && key !== 'fullName' && key !== 'name' && key !== "lastname" && key !== "created") {
+				string += `<div class="user-data">
+					<h3>${key}</h3>
+					<div> ${data}</div>
+				</div>`
+			}
+		}
+		return string;
+	}
+	createMain() {
 
-  createMain() {
-
-    return `<main class="main">
+		let main = `<main class="main">
 		<div class="container">
 			<img src="images/user-face.png" alt="#" class=" user-img img-circle center-block">
-			<div class="user-name">User Name</div>
+			<div class="user-name">${this.user.fullName}</div>
 			<div class="options-line">
 				<div class="message">
 					<div class="options-icon"><span class="icon glyphicon glyphicon-comment" aria-hidden="true"></span></div>
@@ -41,19 +53,9 @@ class User {
 				</div>
 			</div>
 			<div class="options-table">
-				<div class="user-data">
-					<h3>mobile</h3>
-					<div> +38 (093) 989 89 89</div>
-				</div>
-				<div class="user-data">
-					<h3>home</h3>
-					<div> +38 (093) 989 89 89</div>
-				</div>
-				<div class="user-data">
-					<h3>email</h3>
-					<div>lana-mouse@ec.ua</div>
-				</div>
-				<div class="options-item"><a href="#">Notes</a></div>
+			<div class = user-data-all>`;
+		main += this.fillData();
+		main += `</div><div class="options-item"><a href="#">Notes</a></div>
 				<div class="options-item"><a href="#">Send message</a></div>
 				<div class="options-item"><a href="#">Share contact</a></div>
 				<div class="options-item"><a href="#">Add to favorites</a></div>
@@ -61,14 +63,35 @@ class User {
 				<div class="options-item"><a href="#">Block this caller</a></div>
 			</div>
 		</div>
-	</main>`
-  }
-  render() {
-    let app = document.getElementById('app')
-    app.innerHTML = this.createHeader() + this.createMain();
-  }
+	</main>`;
+		return main
+	}
+
+
+	events() {
+		this.edit = document.getElementById('editContact');
+		this.back = document.getElementById('backToContacts')
+
+		this.edit.addEventListener('click', e => {
+			e.preventDefault();
+			let myEditContact = new EditContact(this.user);
+			myEditContact.render();
+		});
+
+		this.back.addEventListener('click', e => {
+			e.preventDefault();
+			myTelephoneBook.render();
+		});
+
+	}
+
+
+	render() {
+		let app = document.getElementById('app')
+		app.innerHTML = this.createHeader() + this.createMain();
+		this.events();
+	}
 }
 
 
 
-let myUser = new User();
