@@ -1,22 +1,22 @@
 class AddUser {
-  constructor() {
-
-  }
-  createHeader() {
-    return `<header class="header">
+	constructor() {
+		this.newUser = {};
+	}
+	createHeader() {
+		return `<header class="header">
 		<div class="container top-radius">
 			<nav class="user-top-line">
-				<a href="user.html">Cansel</a>
-				<button class="done-btn">Done</button>
+				<a href="user.html" id = "cansel">Cansel</a>
+				<button class="done-btn" id = "done">Done</button>
 			</nav>
 		</div>
 	</header>`;
-  }
+	}
 
 
-  createMain() {
+	createMain() {
 
-    return `<main class="main add-user">
+		return `<main class="main add-user" id= "main">
 		<div class="container">
 			<div class="edit-main-info">
 				<div class="edit-foto">
@@ -26,8 +26,8 @@ class AddUser {
 				<div class="main-info-holder">
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="firstname">First name</label>
-						<input type="text" class="add-btn" id="firstname" placeholder="First Name">
+						<label class="sr-only" for="name">First name</label>
+						<input type="text" class="add-btn" id="name" placeholder="First Name">
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -45,13 +45,8 @@ class AddUser {
 				<div class="edit-info">
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addPhone">Add phone</label>
-						<input type="text" class="add-btn" id="addPhone" placeholder="add phone">
-					</div>
-					<div class="edit-field">
-						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addHomePhone">Add home phone</label>
-						<input type="text" class="add-btn" id="addHomePhone" placeholder="add home phone">
+						<label class="sr-only" for="phone">Add phone</label>
+						<input type="text" class="add-btn" id="phone" placeholder="add phone">
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -60,8 +55,8 @@ class AddUser {
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addAddress">Add address</label>
-						<input type="text" class="add-btn" id="addAddress" placeholder="add address">
+						<label class="sr-only" for="address">Add address</label>
+						<input type="text" class="add-btn" id="address" placeholder="add address">
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -70,8 +65,8 @@ class AddUser {
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-						<label class="sr-only" for="addSocialProfile">Add social profile</label>
-						<input type="text" class="add-btn" id="addSocialProfile" placeholder="add social profile">
+						<label class="sr-only" for="socialProfile">Add social profile</label>
+						<input type="text" class="add-btn" id="socialProfile" placeholder="add social profile">
 					</div>
 					<div class="edit-field">
 						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -85,11 +80,43 @@ class AddUser {
 			</div>
 		</div>
 	</main>`
-  }
-  render() {
-    let app = document.getElementById('app')
-    app.innerHTML = this.createHeader() + this.createMain();
-  }
+	}
+
+	events() {
+		this.cancel = document.getElementById('cancel');
+		this.done = document.getElementById('done');
+		this.main = document.getElementById('main');
+		this.inputs = [...this.main.getElementsByTagName('input')];
+		this.done.addEventListener('click', e => {
+			const url = 'https://easycode-js.herokuapp.com/alexm/users';
+			this.inputs.forEach(elem => {
+				let prop = elem.id;
+				if (elem.value) {
+					this.newUser[prop] = elem.value;
+				}
+			})
+			if (this.newUser.name && this.newUser.lastname) {
+				this.newUser.fullName = `${this.newUser.name} ${this.newUser.lastname}`
+				delete this.newUser.name;
+				delete this.newUser.lastname;
+			}
+			console.log(this.newUser);
+			fetch(url, {
+				method: "POST",
+				body: JSON.stringify(this.newUser),
+				headers: { "Content-Type": "application/json" },
+			})
+				.then(data => {
+					myTelephoneBook.request();
+				})
+		});
+		}
+
+	render() {
+				let app = document.getElementById('app')
+		app.innerHTML = this.createHeader() + this.createMain();
+				this.events();
+			}
 }
 
 let myAddUser = new AddUser();
