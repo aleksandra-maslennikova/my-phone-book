@@ -3,6 +3,8 @@ class AddUser {
 		this.newUser = {};
 
 	}
+
+
 	createHeader() {
 		return `<header class="header">
 		<div class="container top-radius">
@@ -31,6 +33,8 @@ class AddUser {
 		}
 		return string
 	}
+
+
 	createMain() {
 		let main = '';
 		main += `<main class="main add-user" id= "main">
@@ -96,6 +100,7 @@ class AddUser {
 		return main
 	}
 
+
 	events() {
 		this.cancel = document.getElementById('cancel');
 		this.done = document.getElementById('done');
@@ -103,16 +108,19 @@ class AddUser {
 		this.clear = document.getElementById('clear');
 		this.inputs = [...this.main.getElementsByTagName('input')];
 
+		//----Return to index.html page after click on cancel--//
 		this.cancel.addEventListener('click', e => {
 			e.preventDefault();
 			let myUser = new User(this.user);
 			myTelephoneBook.render();
 		});
 
-  this.clear.addEventListener('click', e=>{
-		myAddUser.render();
-	});
-	
+		// ---------Clear all fields on click on Clear Fields---//
+		this.clear.addEventListener('click', e => {
+			myAddUser.render();
+		});
+
+		//--------Add new user to database on click on Done and render index.html page with updated table--//
 		this.done.addEventListener('click', e => {
 			const url = 'https://easycode-js.herokuapp.com/alexm/users';
 			this.inputs.forEach(elem => {
@@ -137,6 +145,7 @@ class AddUser {
 		});
 	}
 
+
 	render(phoneNumber) {
 		this.phone = phoneNumber;
 		let app = document.getElementById('app')
@@ -146,4 +155,3 @@ class AddUser {
 }
 
 let myAddUser = new AddUser();
-
