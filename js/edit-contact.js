@@ -5,6 +5,7 @@ class EditContact {
 		this.mainData = ['name', 'lastname', 'company'];
 		this.additionalData = ['phone', 'email', 'address', 'birthday', 'sotialProfile'];
 	}
+
 	createHeader() {
 		return `<header class="header">
 		<div class="container top-radius">
@@ -15,6 +16,7 @@ class EditContact {
 		</div>
 	</header>`;
 	}
+
 	createMainData() {
 		let string = '';
 		this.mainData.forEach(elem => {
@@ -31,11 +33,12 @@ class EditContact {
 						<input type="text" class="add-btn" id="${elem}" placeholder="${elem}">
 					</div>`;
 			}
-
 		})
 		string += `</div></div>`;
 		return string
 	}
+
+
 	createAdditionalData() {
 		let string = '';
 		string += `<div class="scroll-holder">
@@ -54,10 +57,12 @@ class EditContact {
 						<input type="text" class="add-btn" id="${elem}" placeholder="${elem}">
 					</div>`;
 			}
-		})
+		});
 		string += `</div>`
 		return string
 	}
+
+
 	createMain() {
 		let main = '';
 		main += `<main class="main edit-contact" id = "main">
@@ -77,10 +82,14 @@ class EditContact {
 	</main>`;
 		return main
 	}
+
+
 	events() {
 		this.cancel = document.getElementById('cancel');
 		this.done = document.getElementById('done');
 		this.main = document.getElementById('main');
+
+		//-------Delete attribute disabled for input after click on red minus sign----//
 		this.main.addEventListener('click', e => {
 			e.preventDefault();
 			if (e.target.classList.contains('glyphicon-minus-sign')) {
@@ -88,15 +97,17 @@ class EditContact {
 				this.input = this.selectedInput[0];
 				this.input.removeAttribute('disabled');
 				this.input.value = '';
-				console.log(this.input);
 			}
-		})
+		});
+
+		// ------ Return to User page after click on Cancel----//
 		this.cancel.addEventListener('click', e => {
 			e.preventDefault();
 			let myUser = new User(this.user);
 			myUser.render();
 		});
 
+		//----Update User data after click on Done, render index.html with updated User----// 
 		this.done.addEventListener('click', e => {
 			e.preventDefault();
 			const url = 'https://easycode-js.herokuapp.com/alexm/users';
@@ -106,12 +117,13 @@ class EditContact {
 				if (elem.value) {
 					this.newUser[prop] = elem.value;
 				}
-			})
+			});
 			if (this.newUser.name && this.newUser.lastname) {
 				this.newUser.fullName = `${this.newUser.name} ${this.newUser.lastname}`
-			delete this.newUser.name;
+				delete this.newUser.name;
 				delete this.newUser.lastname;
-			}
+			};
+
 			fetch(`${url}/${this.user._id}`, {
 				method: "PATCH",
 				body: JSON.stringify(this.newUser),
@@ -121,8 +133,9 @@ class EditContact {
 					myTelephoneBook.request();
 				})
 		});
-
 	}
+
+
 
 	render() {
 		let app = document.getElementById('app')
