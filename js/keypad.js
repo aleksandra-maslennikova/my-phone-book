@@ -2,13 +2,14 @@ class Keypad {
   constructor() {
 
   }
+
+
   createHeader() {
     return `<header class="header"><div class="container top-radius"><h2>Keypad</h2></div></header>`;
   }
 
 
   createMain() {
-
     return `<main class = "main keypad"><div class="container">
 			<div class="number">
 				<span id = "addUser" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -33,6 +34,8 @@ class Keypad {
 		</div>
 	</main>`
   }
+
+  //------- Automatic formatting telephon number on typing to (555)55-55-555----//
   transformPhoneNumber(element, char) {
     if (element.textContent.length < 15) {
       if (!element.textContent) {
@@ -55,37 +58,50 @@ class Keypad {
       element.textContent = element.textContent.slice(0, length);
     }
   }
-  events(){
-     this.body = document.querySelector('body');
-     this.keypad = document.querySelector('.keypad-holder');
-     this.numbers = document.querySelector('.numbers');
-     this.deleteNumber = document.getElementById('deleteNumber');
 
 
-      this.keypad.addEventListener('click', e => {
-        if (e.target.classList.contains('key')) {
-          this.transformPhoneNumber(this.numbers, e.target.textContent);
-        }
-      });
+  events() {
+    this.body = document.querySelector('body');
+    this.keypad = document.querySelector('.keypad-holder');
+    this.numbers = document.querySelector('.numbers');
+    this.deleteNumber = document.getElementById('deleteNumber');
+    this.addUser = document.getElementById('addUser');
 
+    //------Open add-user page with filled phone after click on plus sign---//
+    this.addUser.addEventListener('click', e => {
+      let phone = this.numbers.textContent;
+      myAddUser.render(phone);
+    });
 
-      this.deleteNumber.addEventListener('click', e => {
-       this.deleteNumbers(this.numbers);
-      });
+    //------Type numbers on click on keys------//
+    this.keypad.addEventListener('click', e => {
+      if (e.target.classList.contains('key')) {
+        this.transformPhoneNumber(this.numbers, e.target.textContent);
+      }
+    });
 
+    //-------Delete numbers on click on leftArrow sign----//
+    this.deleteNumber.addEventListener('click', e => {
+      this.deleteNumbers(this.numbers);
+    });
 
-      document.body.addEventListener('keydown', (e) => {
-        if (Number(e.key) >= 0 || e.key == '*' || e.key == '#') {
-          this.transformPhoneNumber(this.numbers, e.key);
-        }
-        if (e.key == 'Backspace') {
-         this.deleteNumbers(this.numbers)
-        }
-      })
+    // ----- Add ability to use keyboard to type and delete numbers--//
+    document.body.addEventListener('keydown', (e) => {
+      if (Number(e.key) >= 0 || e.key == '*' || e.key == '#') {
+        this.transformPhoneNumber(this.numbers, e.key);
+      }
+      if (e.key == 'Backspace') {
+        this.deleteNumbers(this.numbers)
+      }
+    })
   }
+
+
+  
   render() {
     let app = document.getElementById('app');
     app.innerHTML = this.createHeader() + this.createMain();
+    this.events();
   }
 }
 
