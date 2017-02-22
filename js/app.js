@@ -40,7 +40,15 @@ class App {
 
 
   createMain() {
-    let main = `<main class ="main app"><div class = "container"><form class="form-inline search-form"><div class="form-group"><label class="sr-only" for="search">Search</label><input type="text" class="form-control" id= "search" placeholder="Search"></div></form>`;
+    let main = 
+    `<main class ="main app">
+      <div class = "container">
+        <form class="form-inline search-form">
+          <div class="form-group">
+            <label class="sr-only" for="search">Search</label>
+            <input type="text" class="form-control" id= "search" placeholder="Search">
+          </div>
+        </form>`;
     main += this.createTable();
     return main += `</div></main>`
   }
@@ -152,9 +160,6 @@ class App {
       app.innerHTML = this.createHeader() + this.createMain();
       this.events();
     }
-
-
-
   }
 }
 
@@ -173,13 +178,11 @@ links.forEach(link => {
     // ------ INDEX.HTML--------------------------//
     if (link.getAttribute('href') == 'index.html') {
       myTelephoneBook.render();
-      myTelephoneBook.events();
     }
     //--------------KEYPAD-----------------------------//
     if (link.getAttribute('href') == 'keypad.html') {
       let myKeypad = new Keypad();
       myKeypad.render();
-      myKeypad.events();
     }
     // ---------------ADD-USER -----------------//
     if (link.getAttribute('href') == 'add-user.html') {
