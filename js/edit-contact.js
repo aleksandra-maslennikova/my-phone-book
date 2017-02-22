@@ -138,8 +138,16 @@ class EditContact {
 
 
 	render() {
-		let app = document.getElementById('app')
-		app.innerHTML = this.createHeader() + this.createMain();
-		this.events()
+		this.app = document.getElementById('app');
+    if (this.app) {
+      this.app.innerHTML = this.createHeader() + this.createMain();
+      this.events();
+    } else {
+      this.app = document.createElement('div');
+      document.body.prepend(this.app);
+      this.app.id = 'app';
+      this.app.innerHTML = this.createHeader() + this.createMain();
+      this.events();
+    }
 	}
 }

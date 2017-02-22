@@ -7,7 +7,6 @@ class App {
     return `<header class="header"><div class="container top-radius"><h2>Contacts</h2></div></header>`;
   }
 
-
   createTableBody(param) {
     let users;
     if (param) {
@@ -26,7 +25,6 @@ class App {
     return tbody;
   }
 
-
   createTable() {
     let table = `<table class = "table table-hover contacts"><thead><tr>`;
     this.tableHeaders.forEach((el, index) => {
@@ -40,8 +38,8 @@ class App {
 
 
   createMain() {
-    let main = 
-    `<main class ="main app">
+    let main =
+      `<main class ="main app">
       <div class = "container">
         <form class="form-inline search-form">
           <div class="form-group">
@@ -67,8 +65,9 @@ class App {
       return 0;
     })
   }
+
+
   findUserByEmail(param) {
-    console.log(this.users);
     let finedUser;
     this.users.forEach(elem => {
       if (elem.email === param) {
@@ -76,12 +75,10 @@ class App {
       }
     })
     return finedUser
-
-
   }
 
-  findUsersByName(param) {
 
+  findUsersByName(param) {
     let finedUsers = [];
     this.users.forEach(elem => {
       if (elem.name.search([param]) != -1 || elem.name.toLowerCase().search([param]) != -1) {
@@ -90,7 +87,6 @@ class App {
     })
     return finedUsers
   }
-
 
   events() {
     this.nameHeader = document.querySelector('.header0');
@@ -103,7 +99,6 @@ class App {
     this.nameHeader.addEventListener('click', e => {
       this.users = this.sortUsers('name');
       this.tbody.innerHTML = this.createTableBody();
-
     });
 
     //----Sort users by lastname-------//
@@ -117,18 +112,19 @@ class App {
       this.users = this.sortUsers('email');
       this.tbody.innerHTML = this.createTableBody();
     });
+
     // ------Search user---------------//
     this.search.addEventListener('keyup', e => {
       this.newUsers = this.findUsersByName(this.search.value);
       this.tbody.innerHTML = this.createTableBody(this.newUsers);
-    })
+    });
 
+    //-----------Open User after click on row------/// 
     this.tbody.addEventListener('click', e => {
-
       if (e.target.tagName == "TD") {
         this.row = e.target.parentElement;
       } else {
-        this.row = e.target
+        this.row = e.target;
       }
       this.email = this.row.querySelector('.email').textContent;
       this.user = this.findUserByEmail(this.email);
@@ -149,15 +145,15 @@ class App {
   }
 
   render() {
-    let app = document.getElementById('app');
-    if (app) {
-      app.innerHTML = this.createHeader() + this.createMain();
+    this.app = document.getElementById('app');
+    if (this.app) {
+      this.app.innerHTML = this.createHeader() + this.createMain();
       this.events();
     } else {
-      app = document.createElement('div');
-      document.body.prepend(app);
-      app.id = 'app';
-      app.innerHTML = this.createHeader() + this.createMain();
+      this.app = document.createElement('div');
+      document.body.prepend(this.app);
+      this.app.id = 'app';
+      this.app.innerHTML = this.createHeader() + this.createMain();
       this.events();
     }
   }
@@ -174,20 +170,33 @@ let links = [...document.querySelectorAll('.main-nav>a')];
 links.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
+    let href = link.href;
+    this.state = this.app.innerHTML;
+    links.forEach(elem => {
+      elem.classList.remove('active');
+    });
 
     // ------ INDEX.HTML--------------------------//
     if (link.getAttribute('href') == 'index.html') {
+      console.log(state);
       myTelephoneBook.render();
-    }
-    //--------------KEYPAD-----------------------------//
-    if (link.getAttribute('href') == 'keypad.html') {
-      let myKeypad = new Keypad();
-      myKeypad.render();
-    }
-    // ---------------ADD-USER -----------------//
-    if (link.getAttribute('href') == 'add-user.html') {
-      myAddUser.render()
+      history.pushState(this.state, href, href);
     }
 
+    //--------------KEYPAD-----------------------------//
+    if (link.getAttribute('href') == 'keypad.html') {
+      myKeypad.render();
+      history.pushState(this.state, href, href);
+    }
+
+    // ---------------ADD-USER -----------------//
+    if (link.getAttribute('href') == 'add-user.html') {
+      myAddUser.render();
+      history.pushState(this.state, href, href);
+    }
   })
-}) 
+
+})
+window.addEventListener('popstate', function (event) {
+ console.log(event);
+})
