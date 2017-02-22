@@ -1,7 +1,7 @@
 class AddUser {
 	constructor() {
 		this.newUser = {};
-	
+
 	}
 	createHeader() {
 		return `<header class="header">
@@ -87,7 +87,7 @@ class AddUser {
 							<input type="text" class="add-btn" id="addField" placeholder="add field">
 					</div>
 							<div class="edit-field">
-								<button href="#" class="delete-contact">delete contact</button>
+								<button href="#" class="delete-contact" id = "clear" >clear fields</button>
 							</div>
 						</div>
 					</div>
@@ -100,6 +100,7 @@ class AddUser {
 		this.cancel = document.getElementById('cancel');
 		this.done = document.getElementById('done');
 		this.main = document.getElementById('main');
+		this.clear = document.getElementById('clear');
 		this.inputs = [...this.main.getElementsByTagName('input')];
 
 		this.cancel.addEventListener('click', e => {
@@ -108,6 +109,10 @@ class AddUser {
 			myTelephoneBook.render();
 		});
 
+  this.clear.addEventListener('click', e=>{
+		myAddUser.render();
+	});
+	
 		this.done.addEventListener('click', e => {
 			const url = 'https://easycode-js.herokuapp.com/alexm/users';
 			this.inputs.forEach(elem => {
@@ -121,7 +126,6 @@ class AddUser {
 				delete this.newUser.name;
 				delete this.newUser.lastname;
 			}
-			console.log(this.newUser);
 			fetch(url, {
 				method: "POST",
 				body: JSON.stringify(this.newUser),
