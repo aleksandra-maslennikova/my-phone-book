@@ -1,6 +1,7 @@
 class App {
   constructor() {
     this.tableHeaders = ['Name', 'Last Name', 'Email'];
+
   }
 
   createHeader() {
@@ -130,6 +131,8 @@ class App {
       this.user = this.findUserByEmail(this.email);
       let myUser = new User(this.user);
       myUser.render();
+      let href = 'user.html';
+      history.pushState({ name: 'user' }, href, href);
     })
   }
 
@@ -142,6 +145,7 @@ class App {
         this.users = data;
         this.render();
       })
+
   }
 
   render() {
@@ -161,7 +165,9 @@ class App {
 
 let myTelephoneBook = new App();
 myTelephoneBook.request();
-
+let href = 'index.html';
+history.pushState({ name: 'index' }, href, href);
+let router;
 
 
 //---------------ROUTER------------------------//
@@ -169,34 +175,53 @@ let links = [...document.querySelectorAll('.main-nav>a')];
 
 links.forEach(link => {
   link.addEventListener('click', event => {
+    router = {
+      'index': myTelephoneBook,
+      'keypad': myKeypad,
+      'add-user': myAddUser,
+    };
+
+    links.forEach(link => {
+      link.classList.remove('active');
+    });
+
     event.preventDefault();
     let href = link.href;
-    this.state = this.app.innerHTML;
-    links.forEach(elem => {
-      elem.classList.remove('active');
-    });
+
 
     // ------ INDEX.HTML--------------------------//
     if (link.getAttribute('href') == 'index.html') {
-      console.log(state);
       myTelephoneBook.render();
-      history.pushState(this.state, href, href);
+
+      link.classList.add('active');
+      history.pushState({ name: 'index' }, href, href);
     }
 
     //--------------KEYPAD-----------------------------//
     if (link.getAttribute('href') == 'keypad.html') {
       myKeypad.render();
-      history.pushState(this.state, href, href);
+      link.classList.add('active');
+      history.pushState({ name: 'keypad' }, href, href);
     }
 
     // ---------------ADD-USER -----------------//
     if (link.getAttribute('href') == 'add-user.html') {
       myAddUser.render();
-      history.pushState(this.state, href, href);
+      link.classList.add('active');
+      history.pushState({ name: 'add-user' }, href, href);
     }
   })
 
 })
 window.addEventListener('popstate', function (event) {
- console.log(event);
+  router[event.state.name].render();
+  let links = [...document.querySelectorAll('.main-nav>a')];
+  links.forEach(link => {
+    if (link.classList.contains('active')) { link.classList.remove('active') };
+    if (link.getAttribute('href') == `${event.state.name}.html`) {
+      link.classList.add('active');
+    }
+  });
+
 })
+

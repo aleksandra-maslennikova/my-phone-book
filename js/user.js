@@ -80,27 +80,31 @@ class User {
 			e.preventDefault();
 			let myEditContact = new EditContact(this.user);
 			myEditContact.render();
+			let href = 'edit-contact.html';
+			history.pushState({ name: 'edit-contact' }, href, href);
 		});
 
 		//----Open page index.html on click on Back--------//
 		this.back.addEventListener('click', e => {
 			e.preventDefault();
 			myTelephoneBook.render();
+			let href = 'index.html';
+			history.pushState({ name: 'index' }, href, href);
 		});
 	}
 
 
 	render() {
 		this.app = document.getElementById('app');
-    if (this.app) {
-      this.app.innerHTML = this.createHeader() + this.createMain();
-      this.events();
-    } else {
-      this.app = document.createElement('div');
-      document.body.prepend(this.app);
-      this.app.id = 'app';
-      this.app.innerHTML = this.createHeader() + this.createMain();
-      this.events();
-    }
+		if (this.app) {
+			this.app.innerHTML = this.createHeader() + this.createMain();
+			this.events();
+		} else {
+			this.app = document.createElement('div');
+			document.body.prepend(this.app);
+			this.app.id = 'app';
+			this.app.innerHTML = this.createHeader() + this.createMain();
+			this.events();
+		}
 	}
 }

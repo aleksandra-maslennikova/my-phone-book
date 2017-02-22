@@ -105,6 +105,8 @@ class EditContact {
 			e.preventDefault();
 			let myUser = new User(this.user);
 			myUser.render();
+			let href = 'user.html';
+			history.pushState({ name: 'user' }, href, href);
 		});
 
 		//----Update User data after click on Done, render index.html with updated User----// 
@@ -139,15 +141,15 @@ class EditContact {
 
 	render() {
 		this.app = document.getElementById('app');
-    if (this.app) {
-      this.app.innerHTML = this.createHeader() + this.createMain();
-      this.events();
-    } else {
-      this.app = document.createElement('div');
-      document.body.prepend(this.app);
-      this.app.id = 'app';
-      this.app.innerHTML = this.createHeader() + this.createMain();
-      this.events();
-    }
+		if (this.app) {
+			this.app.innerHTML = this.createHeader() + this.createMain();
+			this.events();
+		} else {
+			this.app = document.createElement('div');
+			document.body.prepend(this.app);
+			this.app.id = 'app';
+			this.app.innerHTML = this.createHeader() + this.createMain();
+			this.events();
+		}
 	}
 }
