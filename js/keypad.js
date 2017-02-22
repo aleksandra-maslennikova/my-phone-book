@@ -97,15 +97,10 @@ class Keypad {
   }
 
 
-  
+
   render() {
     let app = document.getElementById('app');
     app.innerHTML = this.createHeader() + this.createMain();
     this.events();
   }
 }
-
-
-
-
-

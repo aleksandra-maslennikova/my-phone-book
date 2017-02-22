@@ -143,8 +143,3 @@ class EditContact {
 		this.events()
 	}
 }
-
-
-
-
-

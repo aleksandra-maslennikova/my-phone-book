@@ -2,6 +2,8 @@ class User {
 	constructor(user) {
 		this.user = user;
 	}
+
+
 	createHeader() {
 		return `<header class="header">
 		<div class="container top-radius">
@@ -14,6 +16,7 @@ class User {
 		</div>
 	</header>`;
 	}
+
 
 	fillData() {
 		let string = '';
@@ -28,8 +31,8 @@ class User {
 		}
 		return string;
 	}
-	createMain() {
 
+	createMain() {
 		let main = `<main class="main">
 		<div class="container">
 			<img src="images/user-face.png" alt="#" class=" user-img img-circle center-block">
@@ -72,17 +75,18 @@ class User {
 		this.edit = document.getElementById('editContact');
 		this.back = document.getElementById('backToContacts')
 
+		//----Open page edit-contact on click on Edit-------//
 		this.edit.addEventListener('click', e => {
 			e.preventDefault();
 			let myEditContact = new EditContact(this.user);
 			myEditContact.render();
 		});
 
+		//----Open page index.html on click on Back--------//
 		this.back.addEventListener('click', e => {
 			e.preventDefault();
 			myTelephoneBook.render();
 		});
-
 	}
 
 
@@ -92,6 +96,3 @@ class User {
 		this.events();
 	}
 }
-
-
-
